@@ -16,11 +16,8 @@ app.config['DOWNLOAD_FOLDER'] = 'static/downloads/'
 
 @app.route('/',methods=['GET'])
 def home():
-    img_path  = "car.png"
-    img =  methods.read_img(img_path)
-    outputpath_jpeg  = "car_out.jpg"
-    methods.compress(outputpath_jpeg,img,jpg_quality=90)
-    return render_template('index.html')
+    return '<h1>Image Compress</h1>'
+
 
 @app.route('/upload',methods=['GET','POST'])
 def upload():
@@ -33,7 +30,6 @@ def upload():
 def analyse():
     if request.method == 'POST':
         image_file = request.files['image']
-        global filename_img
         timestamp  = time.time()
         image_file_name_list = secure_filename(image_file.filename).split('.')
         filename_img = str(image_file_name_list[0]) + str(timestamp) +"." +str(image_file_name_list[-1])
@@ -51,11 +47,10 @@ def download():
         inputpath = app.config['UPLOAD_FOLDER']+session['filename_upload']
         print(inputpath)
         print(compress_ratio)
-        img = methods.read_img(inputpath)
         filename_img = session['filename_upload']
         out_filename = filename_img.split('.')[0]+"."+filename_img.split('.')[1]
         outputpath  = app.config['DOWNLOAD_FOLDER'] + out_filename+".jpg"
-        methods.compress(outputpath,img,jpg_quality = int(compress_ratio))
+        methods.compress_image(inputpath,outputpath,quality=int(compress_ratio))
         out_full_filename = (os.path.join(app.config['DOWNLOAD_FOLDER'],out_filename+".jpg"))
         return render_template('downloadimage.html',image = out_full_filename)
 
