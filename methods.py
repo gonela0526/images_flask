@@ -15,7 +15,15 @@ def image_properties(img_filepath):
         img_props["Image Size"] = img.size
         img_props["Color Palette"] = img.palette
         img_props["Info"] = img.info.items()
-        img_props["File Size"] = len(img.fp.read())
+        img_props["File Size"] = round(len(img.fp.read())/1024,2)
         for key, value in img.info.items():
             print(key,":",value)
-        return img_props 
+        return img_props
+
+
+def resize_img(source_filepath,dest_filepath,img_width,img_height):
+    with Image.open(source_filepath) as img:
+        if img.mode != "RGB":
+            img = img.convert("RGB")
+        new_img = img.resize((img_width,img_height))
+        new_img.save(dest_filepath,"JPEG",optimize=True)

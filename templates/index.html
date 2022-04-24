@@ -1,18 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Image Compression</h1>
-    <form action="http://127.0.0.1:5000/analyse" method="post"  enctype = "multipart/form-data">
-        <input type="file" name="image" id="image">
-        <button type="submit">Submit</button>
+{% extends "base_template.html" %}
+{% block title %}Home{% endblock %}
 
+{% block img_block %}
 
-    </form>
-</body>
-</html>
+<div class="col-md-7">
+    <div class="caption">
+        <p class="mainText">A easy way to Work with Images</p>
+        <p class="tagLine">Customize your images with <code>Images.IO</code></p><br><br>
+    </div>
+    <center>
+        <form action="http://127.0.0.1:5000/analyse" method ="post" enctype = "multipart/form-data" class="image-upload" id = "form">
+            <label for="file" class="import" id="drop_zone" ondrop="dropHandler(event);" ondragover="dragOverHandler(event);">
+                <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+                <lottie-player src="https://assets8.lottiefiles.com/packages/lf20_h27x2otl.json"  background="transparent"  speed="1"  style="height: 21vh;"  loop  autoplay></lottie-player>
+                <p>Drag'n drop your images or click to Upload</p>
+            </label>
+            <input type="text" name = "flag" hidden value="index">
+            <input type="file" id="file" name="image" oninput="form.submit()">
+        </form>
+    </center>
+</div>
+
+{% endblock %}

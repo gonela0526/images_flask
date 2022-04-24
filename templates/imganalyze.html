@@ -1,21 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Image Compression</h1>
-    <img src= "{{ image}}" alt="">
-    <br>
-    <br>
-    <form action="http://127.0.0.1:5000/download" method="post">
-       Compress Ratio: <input type="text" name="compresRatio" id="compresRatio">
-        <button type="submit">Submit</button>
+{% extends "base_template.html" %}
+{% block title %}Home{% endblock %}
 
+{% block img_block %}
 
-    </form>
-</body>
-</html>
+<div class="col-md-7">
+    <div class="caption">
+        <p class="mainText">A easy way to Work with Images</p>
+        <p class="tagLine">Customize your images with <code>Images.IO</code></p><br><br>
+    </div>
+    <center>
+        
+            <label for="file" class="import" id="drop_zone" ondrop="dropHandler(event);" ondragover="dragOverHandler(event);">
+                <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+                <a href="{{ image}}" download> <img style="width:400px; height:400px" src= "{{ image}}" alt="" > </a>
+                <p>Size: {{img_props.get('File Size') }}KB</p>
+                
+               
+            </label>
+            <br>
+            <br>
+            <form action="http://127.0.0.1:5000/analyse" method="post">
+                <input type="text" name = "flag" hidden value="analyze">
+                Compression ratio: <input type="number" name="compressRatio" id="" value = "{{compress_ratio}}">
+                width <input type="number" name="imgWidth" id="" value="{{img_props.get('Image Size')[0]}}">
+                height <input type="number" name="imgHeight" id="" value="{{img_props.get('Image Size')[1]}}" >
+                <button type="submit">Apply changes</button>
+            </form>
+            <a href="{{ image}}" download> <button>download</button></a>
+    </center>
+</div>
+
+{% endblock %}
