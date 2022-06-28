@@ -1,33 +1,64 @@
-{% extends "base_template.html" %}
+{% extends "index.html" %}
+{% block link %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/css/bootstrap-slider.min.css" integrity="sha512-3q8fi8M0VS+X/3n64Ndpp6Bit7oXSiyCnzmlx6IDBLGlY5euFySyJ46RUlqIVs0DPCGOypqP8IRk/EyPvU28mQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/bootstrap-slider.min.js" integrity="sha512-f0VlzJbcEB6KiW8ZVtL+5HWPDyW1+nJEjguZ5IVnSQkvZbwBt2RfCBY0CBO1PsMAqxxrG4Di6TfsCPP3ZRwKpA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+{% endblock %}
 {% block title %}Home{% endblock %}
 
-{% block img_block %}
+{% block upload_block %}
 
-<div class="col-md-7">
-    <div class="caption">
-        <p class="mainText">A easy way to Work with Images</p>
-        <p class="tagLine">Customize your images with <code>Images.IO</code></p><br><br>
+    <div class="caption"><br>
+        <p class="compressText">Your image is compressed with {{img_props.get('File Size') }}KB Size</p>
+        <p class="tagLine"><span class="pointer"></span> You can click on the <code>Image</code> to Download the compressed Image</p><br>
+        <p class="tagLine"><span class="pointer"></span> You can change the compression <code>ratio</code>, <code>compositions</code> and <code>Download</code></p><br><br>
     </div>
+<div class="col-md-7">
     <center>
-        
-            <label for="file" class="import" id="drop_zone" ondrop="dropHandler(event);" ondragover="dragOverHandler(event);">
-                <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
-                <a href="{{ image}}" download> <img style="width:400px; height:400px" src= "{{ image}}" alt="" > </a>
-                <p>Size: {{img_props.get('File Size') }}KB</p>
-                
-               
-            </label>
-            <br>
-            <br>
-            <form action="http://127.0.0.1:5000/analyse" method="post">
-                <input type="text" name = "flag" hidden value="analyze">
-                Compression ratio: <input type="number" name="compressRatio" id="" value = "{{compress_ratio}}">
-                width <input type="number" name="imgWidth" id="" value="{{img_props.get('Image Size')[0]}}">
-                height <input type="number" name="imgHeight" id="" value="{{img_props.get('Image Size')[1]}}" >
-                <button type="submit">Apply changes</button>
-            </form>
-            <a href="{{ image}}" download> <button>download</button></a>
+        <a href="{{ image}}" download> <img style="width:400px; height:400px" src= "{{ image}}" alt="" > </a><br>
     </center>
 </div>
+<div class="col-md-5">
+    <form action="http://127.0.0.1:5000/analyse" method="post">
+        
+        <input type="text" name = "flag" hidden value="analyze">
+        <!-- <input type="range" name="compressRatio" min="0" max="100" value="{{compress_ratio}}" step="5"><br> -->
+        Compression ratio: 
+        <input type="range" name="compressRatio" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="{{compress_ratio}}" data-slider-id="BC" id="A" 
+        data-slider-handle="triangle" />
+        <br>
+        <input type="text" name="compressRatio" id="cr" value = "">
+        <br>
+        width<br>
+        <input type="range" name="imgWidth" data-slider-min="0" data-slider-max="1000" data-slider-step="1" data-slider-value="{{img_props.get('Image Size')[0]}}" data-slider-id="BC" id="B" 
+        data-slider-handle="triangle" />
+        <br>
+         <!-- <input type="number" name="imgWidth" id="" value="{{img_props.get('Image Size')[0]}}"> -->
+        height <br>
+        <input type="range" name="imgWidth" data-slider-min="0" data-slider-max="1000" data-slider-step="1" data-slider-value="{{img_props.get('Image Size')[1]}}" data-slider-id="BC" id="C" 
+        data-slider-handle="triangle" />
+        <br>
+        <!-- <input type="number" name="imgHeight" id="" value="{{img_props.get('Image Size')[1]}}" > -->
+        <button type="submit">Apply changes</button>
+    </form>
+    <a href="{{ image}}" download> <button>download</button></a>
+</div>
+<script>
+    document.getElementById('upload').scrollIntoView({
+        behavior: 'smooth'
+    });
+    var compressSlider = new Slider("#A", {
+        tooltip : 'always'
+    });
+    console.log(compressSlider.getValue())
 
+    var heightSlider = new Slider("#B", {
+        tooltip : 'always'
+    });
+    console.log(heightSlider.getValue())
+
+    var widthSlider = new Slider("#C", {
+        tooltip : 'always'
+    });
+    console.log(widthSlider.getValue())
+</script>
 {% endblock %}
