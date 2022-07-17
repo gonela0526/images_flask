@@ -144,3 +144,33 @@ code{
 .image-upload>input {
     display: none;
 }
+.section-upload{
+    background: #161623;
+    color:white;
+}
+.compressText {
+    font-family: 'Courier New', monospace;
+    font-size: 4vh;
+    line-height: 8vh;
+    font-weight: bold;
+}
+.section-upload .tagLine{
+    padding-left: 2vw;
+}
+.pointer:after{
+    content: ' \0514';
+    color: aquamarine;
+}
+
+.rightDirection:after{
+    content: ' \21F0';
+}
+
+#BC .slider-selection {
+	background: #8283FF;
+}
+#BC .slider-handle {
+}
+#B {
+	width: 300px;
+}
